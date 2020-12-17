@@ -20,6 +20,8 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "rtc.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -60,9 +62,7 @@ void SystemClock_Config(void);
 //    ITM_SendChar((*ptr++));
 //  return len;
 //}
-/* USER CODE END PFP */
 
-/* USER CODE BEGIN 1 */
 #ifdef __GNUC__
   /* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf
      set to 'Yes') calls __io_putchar() */
@@ -102,10 +102,23 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
   }
   HAL_UART_Receive_IT(&huart1, (uint8_t *)&echoChar, 1);
 }
-/* USER CODE END 1 */
 
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+	static uint64_t time_raw = 0;
+	time_raw++;
+	static uint32_t time_s = 0;
+	static uint32_t time_ms = 0;
+	time_ms = time_raw % 1000;
+	if(time_ms == 0)
+	{
 
+		time_s = (time_raw % 60000) / 1000;
+		printf("%ld seconds elapsed! \n\r", time_s);
+	}
 
+}
+/* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
@@ -142,11 +155,16 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART1_UART_Init();
+  MX_TIM6_Init();
+  MX_RTC_Init();
+
   /* USER CODE BEGIN 2 */
+
   printf("\n\r Hello UART\n\r");
   printf("\n\r Hello Printf\n\r");
-
+  HAL_TIM_Base_Start_IT(&htim6);
   HAL_UART_Receive_IT(&huart1, (uint8_t *)&echoChar, 1);
+
 
   /* USER CODE END 2 */
 
@@ -174,6 +192,7 @@ void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
 
   /** Configure the main internal regulator output voltage 
   */
@@ -181,9 +200,10 @@ void SystemClock_Config(void)
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
   /** Initializes the CPU, AHB and APB busses clocks 
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_LSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
   RCC_OscInitStruct.PLL.PLLM = 8;
@@ -210,6 +230,12 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_RTC;
+  PeriphClkInitStruct.RTCClockSelection = RCC_RTCCLKSOURCE_LSI;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
   {
     Error_Handler();
   }
