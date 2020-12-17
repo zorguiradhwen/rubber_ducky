@@ -25,7 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -45,7 +45,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+char echoChar = '\n';
+uint8_t count = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -59,7 +60,7 @@ void SystemClock_Config(void);
 //    ITM_SendChar((*ptr++));
 //  return len;
 //}
-
+/* USER CODE END PFP */
 
 /* USER CODE BEGIN 1 */
 #ifdef __GNUC__
@@ -82,10 +83,29 @@ PUTCHAR_PROTOTYPE
 
   return ch;
 }
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(huart);
+
+  /* NOTE : This function should not be modified, when the callback is needed,
+            the HAL_UART_RxCpltCallback can be implemented in the user file
+   */
+  if (echoChar == '\n')
+  {
+	  printf("\n");
+  }
+  else
+  {
+	  HAL_UART_Transmit(&huart1, (uint8_t *)&echoChar, 1, 0xFFFF);
+  }
+  HAL_UART_Receive_IT(&huart1, (uint8_t *)&echoChar, 1);
+}
 /* USER CODE END 1 */
 
-uint8_t count = 0;
-/* USER CODE END PFP */
+
+
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
@@ -124,6 +144,10 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
   printf("\n\r Hello UART\n\r");
+  printf("\n\r Hello Printf\n\r");
+
+  HAL_UART_Receive_IT(&huart1, (uint8_t *)&echoChar, 1);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -134,8 +158,8 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	  HAL_GPIO_TogglePin(RLED_GPIO_Port, RLED_Pin);
-	  count++;
-	  printf("\n\r Hello from main: %d \n\r", count);
+	  //count++;
+	  //printf("\n\r Hello from main: %d \n\r", count);
 
 	  HAL_Delay(1000);
   }
