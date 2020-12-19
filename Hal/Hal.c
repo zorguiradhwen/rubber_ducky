@@ -6,6 +6,7 @@
  */
 
 #include "Hal.h"
+#include "timestamp.h"
 
 char echoChar = '\n';
 
@@ -32,7 +33,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	if(htim->Instance == TIMESTAMP_TIMER)
 	{
-		Timestamp_updateTimeCount();
+		Timestamp_updateTickCount();
 	}
 
 
@@ -53,11 +54,13 @@ Bool Hal_init()
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART1_UART_Init();
-  MX_TIM6_Init();
-  MX_RTC_Init();
+  //MX_RTC_Init();
 
+  MX_TIM6_Init();
   /* Start time base interrupt */
   HAL_TIM_Base_Start_IT(&htim6);
+
+  Timestamp_init();
 
   /* initialize reception via UART interrupt */
   HAL_UART_Receive_IT(&huart1, (uint8_t *)&echoChar, 1);

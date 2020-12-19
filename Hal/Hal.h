@@ -36,6 +36,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
 
 void SystemClock_Config(void);
 
+#define Hal_Delay(d) HAL_Delay(d)
 
 Bool Hal_init();
 
