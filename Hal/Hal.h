@@ -13,13 +13,12 @@
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
-
 #include <stdio.h>
-
 #include "Hal_types.h"
 
 #define TIMESTAMP_TIMER TIM6
-
+#define LOG_UART USART1
+#define Uart_send(handler, buffer, len) HAL_UART_Transmit(handler, buffer, len, 0xFF)
 
 #ifdef __GNUC__
   /* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf

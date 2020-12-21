@@ -31,11 +31,12 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
+#if defined(TIMESTAMP_MODULE)
 	if(htim->Instance == TIMESTAMP_TIMER)
 	{
 		Timestamp_updateTickCount();
 	}
-
+#endif
 
 
 }
@@ -55,10 +56,6 @@ Bool Hal_init()
   MX_GPIO_Init();
   MX_USART1_UART_Init();
   //MX_RTC_Init();
-
-  MX_TIM6_Init();
-  /* Start time base interrupt */
-  HAL_TIM_Base_Start_IT(&htim6);
 
   Timestamp_init();
 

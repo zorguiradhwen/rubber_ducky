@@ -13,15 +13,24 @@ int main(void)
 {
 	Hal_init();
 	Hal_Delay(1500);
-	Clock clk;
+	TimeFields clk;
 	char clockStr[13] = "";
-	Timestamp_getClock(T_Relative, &clk);
+	Timestamp_getTime(&clk);
+	TimeFields t_after = {
+			150, 35, 3, 5, 2
+	};
+	TimeFields t_before = {
+				500, 48, 3, 5, 1
+		};
+	TimeFields result ;
+
+	Timestamp_getTimespan(&t_after, &t_before, &result);
 	while (True)
 	{
 		printf("Test Main\n\r");
 		HAL_Delay(500);
-		Timestamp_getClock(T_Relative, &clk);
-		Timestamp_Clock2String(&clk, clockStr);
+		Timestamp_getTime(&clk);
+		Timestamp_Time2String(&clk, clockStr);
 
 	}
 

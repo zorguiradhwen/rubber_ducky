@@ -8,11 +8,8 @@
 #ifndef TIMESTAMP_TIMESTAMP_H_
 #define TIMESTAMP_TIMESTAMP_H_
 
-#include "Hal.h"
-//#include <time.h>
+#include "timestamp_conf.h"
 
-
-#define TIME_RESOLUTION (1u) // time resolution in ms
 
 typedef enum TimestampError_s
 {
@@ -24,11 +21,13 @@ typedef enum TimestampError_s
 }TimestampError;
 
 
-#if 1
-typedef struct ClockFields_s
+
+typedef struct TimeFields_s
 {
-	u16 msecs, secs, mins, hrs;
-}Clock;
+	u16 msecs, secs, mins, hrs, days;
+}TimeFields;
+
+/*
 
 typedef enum WeekDay_s
 {
@@ -40,45 +39,18 @@ typedef enum Month_s
 	January = 1u, February, March, April, Mai, June, July, August, September, October, November, December
 }Month;
 
-typedef struct DateFields_s
+*/
+
+typedef enum TimeUnit_e
 {
-	WeekDay weekday;
-	u16 day;
-	Month month;
-	u16 year;
-}Date;
+	Milliseconds, Seconds, Minutes, Hours, days
+}TimeUnit;
 
-typedef struct Time_s
-{
-	Clock clock;
-	Date date;
-}Time;
-
-typedef enum TimeRef_e
-{
-	T_Absolute, T_Relative
-}TimeRef;
-
-
-TimestampError Timestamp_getClock(TimeRef tref, Clock* clock);
-TimestampError Timestamp_getDate(Date* date);
-TimestampError Timestamp_getTime(TimeRef tref, Time* time);
-
-TimestampError Timestamp_Clock2String(Clock* clock, char* clockStr);
-TimestampError Timestamp_Date2String(Date* date, char* dateStr);
-TimestampError Timestamp_Time2String(Time* time, char* timeStr);
-
-TimestampError Timestamp_getTimespan(Time* t1, Time* t2, u64* timespan);
-TimestampError Timestamp_timespan2String(u64 timespan, char* timespanStr);
-
-
-#endif
-
-
-
-
+TimestampError Timestamp_ConvertToUnit(TimeFields* T, TimeUnit unit, u64 result);
+TimestampError Timestamp_getTime(TimeFields* T);
+TimestampError Timestamp_Time2String(TimeFields* T, char* timeStr);
+TimestampError Timestamp_getTimespan(TimeFields* after, TimeFields* before, TimeFields* timespan);
 TimestampError Timestamp_init();
-TimestampError Timestamp_start();
 TimestampError Timestamp_updateTickCount();
 
 
