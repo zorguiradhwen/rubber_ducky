@@ -17,7 +17,9 @@ typedef enum TimestampError_s
 	Conversion_Err,
 	Read_Err,
 	Write_Err,
-	InvalidTime_Err
+	InvalidTime_Err,
+	RtcSet,
+	RtcNotSet
 }TimestampError;
 
 
@@ -27,7 +29,7 @@ typedef struct TimeFields_s
 	u16 msecs, secs, mins, hrs, days;
 }TimeFields;
 
-/*
+
 
 typedef enum WeekDay_s
 {
@@ -36,10 +38,17 @@ typedef enum WeekDay_s
 
 typedef enum Month_s
 {
-	January = 1u, February, March, April, Mai, June, July, August, September, October, November, December
+	January = 1u, February, March, April, Mai, June, July, August, September, October = 0x10, November, December
 }Month;
 
-*/
+typedef struct DateFields_s
+{
+	WeekDay wday;
+	u8 day;
+	Month month;
+	u16 year;
+}DateFields;
+
 
 typedef enum TimeUnit_e
 {
@@ -52,6 +61,18 @@ TimestampError Timestamp_Time2String(TimeFields* T, char* timeStr);
 TimestampError Timestamp_getTimespan(TimeFields* after, TimeFields* before, TimeFields* timespan);
 TimestampError Timestamp_init();
 TimestampError Timestamp_updateTickCount();
+
+
+TimestampError Timestamp_rtcSetTime(TimeFields *T);
+TimestampError Timestamp_rtcGetTime(TimeFields *T);
+TimestampError Timestamp_rtcSetDate(DateFields *T);
+TimestampError Timestamp_rtcGetDate(DateFields *T);
+TimestampError Timestamp_isRtcSet();
+TimestampError Timestamp_Date2String(DateFields* D, char* dateStr);
+
+TimestampError Timestamp_RTCTime2String(TimeFields* T, char* timeStr);
+
+
 
 
 

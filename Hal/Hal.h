@@ -16,7 +16,6 @@
 #include <stdio.h>
 #include "Hal_types.h"
 
-#define TIMESTAMP_TIMER TIM6
 #define LOG_UART USART1
 #define Uart_send(handler, buffer, len) HAL_UART_Transmit(handler, buffer, len, 0xFF)
 
