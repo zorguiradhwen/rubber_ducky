@@ -17,17 +17,11 @@
 #include "Hal_types.h"
 
 #define LOG_UART USART1
+#define LOG_UART_HANDLER huart1
+#define UART_HANDLER_TYPE UART_HandleTypeDef
 #define Uart_send(handler, buffer, len) HAL_UART_Transmit(handler, buffer, len, 0xFF)
 
-#ifdef __GNUC__
-  /* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf
-     set to 'Yes') calls __io_putchar() */
-  #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
-#else
-  #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
-#endif
 
-PUTCHAR_PROTOTYPE;
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart);
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);

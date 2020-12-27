@@ -9,6 +9,7 @@
 #define TIMESTAMP_TIMESTAMP_CONF_H_
 
 #include "Hal.h"
+#include "printf_override.h"
 
 #define TIMESTAMP_MODULE
 

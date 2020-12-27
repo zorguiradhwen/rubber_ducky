@@ -96,7 +96,7 @@ DateFields RTCDate = {0};
 
 TimestampError Timestamp_rtcSetTime(TimeFields *T)
 {
-	printf(__TIME__ "\n\r");
+	TIMESTAMP_LOG(__TIME__ "\n\r");
 	sscanf (__TIME__, "%hu%*c%hu%*c%hu", &RTCTime.hrs, &RTCTime.mins, &RTCTime.secs);
 	RTCTime.msecs = 0;
 
@@ -131,7 +131,7 @@ TimestampError Timestamp_rtcGetTime(TimeFields *T)
 }
 TimestampError Timestamp_rtcSetDate(DateFields *D)
 {
-	printf(__DATE__ "\n\r");
+	TIMESTAMP_LOG(__DATE__ "\n\r");
 	sscanf(__DATE__, "%*c%*c%*c%*c%u%*c%u", &D->day, &D->year);
 	char _month[4] = "";
 	strncpy(_month, __DATE__, 3);

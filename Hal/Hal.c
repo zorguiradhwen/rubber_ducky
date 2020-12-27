@@ -7,6 +7,7 @@
 
 #include "Hal.h"
 #include "timestamp.h"
+#include "printf_override.h"
 
 char echoChar = '\n';
 
@@ -56,7 +57,7 @@ Bool Hal_init()
   MX_GPIO_Init();
   MX_USART1_UART_Init();
   //MX_RTC_Init();
-
+  printf_init();
   Timestamp_init();
 
   /* initialize reception via UART interrupt */
@@ -67,14 +68,7 @@ Bool Hal_init()
 }
 
 
-PUTCHAR_PROTOTYPE
-{
-  /* Place your implementation of fputc here */
-  /* e.g. write a character to the EVAL_COM1 and Loop until the end of transmission */
-  HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 0xFFFF);
 
-  return ch;
-}
 
 void SystemClock_Config(void)
 {
