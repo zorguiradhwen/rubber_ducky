@@ -38,7 +38,7 @@ Bool printf_changeCom(ComType _comtype, ComHandlerType _comHandler)
 }
 Bool printf_init()
 {
-	printf_changeCom(COM_UART, &LOG_UART_HANDLER);
+	printf_changeCom(COM_UART, &UART1_HANDLER);
 	return True;
 }
 

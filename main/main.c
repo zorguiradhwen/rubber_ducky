@@ -10,26 +10,27 @@
 
 #include "timestamp.h"
 
+#include "logger.h"
+
 int main(void)
 {
 	Hal_init();
 	Hal_Delay(1500);
-	TimeFields T = {0};
-	DateFields D = {0};
-	Timestamp_rtcGetTime(&T);
-	Timestamp_rtcGetDate(&D);
-	char dateStr[] = "00/00/0000";
-	char timeStr[] = "000d 00:00:00.000";
-	Timestamp_Time2String(&T, timeStr);
-	Timestamp_Date2String(&D, dateStr);
+	LOG_WARN("This is a warning !!!")
+	LOG_ERROR("This is an ERROR")
+	u8 i = 0;
+
 	while (True)
 	{
-		printf("Test Main\n\r");
+		LOG_LOG(LEVEL_WARNING, "test %03d",i)
+		LOG_INFO("This is an INFO n: %03d", i)
+		LOG_TRACE("This is an TRACE n: %03d", i)
+		LOG_ERROR("This is an ERROR n: %03d", i)
+		LOG_FATAL("This is an FATAL n: %03d", i)
+		LOG_WARN("This is an WARNING n: %03d", i)
+		i++;
 		HAL_Delay(500);
-		Timestamp_rtcGetTime(&T);
-		Timestamp_rtcGetDate(&D);
-		Timestamp_Time2String(&T, timeStr);
-		Timestamp_Date2String(&D, dateStr);
+
 
 
 	}

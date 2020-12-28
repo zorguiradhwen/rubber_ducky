@@ -20,7 +20,7 @@
 #define TIMESTAMP_START_COUNT() HAL_TIM_Base_Start_IT(&htim6)
 
 //#define TIMESTAMP_RESOLUTION (1u)
-#define TIMESTAMP_DEBUG True
+#define TIMESTAMP_DEBUG False
 
 #if TIMESTAMP_DEBUG
 #define TIMESTAMP_LOG(...) printf(__VA_ARGS__)

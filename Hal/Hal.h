@@ -15,9 +15,9 @@
 #include "gpio.h"
 #include <stdio.h>
 #include "Hal_types.h"
+#include "timestamp.h"
 
-#define LOG_UART USART1
-#define LOG_UART_HANDLER huart1
+#define UART1_HANDLER huart1
 #define UART_HANDLER_TYPE UART_HandleTypeDef
 #define Uart_send(handler, buffer, len) HAL_UART_Transmit(handler, buffer, len, 0xFF)
 

@@ -190,7 +190,7 @@ TimestampError Timestamp_rtcGetDate(DateFields *D)
 
 TimestampError Timestamp_RTCTime2String(TimeFields* T, char* timeStr)
 {
-	sprintf(timeStr, "%02hu:%02hu:%02hu.%03hu", T->hrs, T->mins, T->secs, T->msecs);
+	sprintf(timeStr, "%02hu:%02hu:%02hu", T->hrs, T->mins, T->secs);
 	TIMESTAMP_LOG("%s\n\r", timeStr);
 	return No_Err;
 }
