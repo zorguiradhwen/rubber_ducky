@@ -8,26 +8,25 @@
 #include "Hal.h"
 #include "timestamp.h"
 #include "printf_override.h"
+#include "Terminal.h"
 
-char echoChar = '\n';
+char RXChar = '\n';
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
   /* Prevent unused argument(s) compilation warning */
   UNUSED(huart);
 
-  /* NOTE : This function should not be modified, when the callback is needed,
-            the HAL_UART_RxCpltCallback can be implemented in the user file
-   */
-  if (echoChar == '\n')
+  Terminal_getChar(RXChar);
+  if (RXChar == '\n')
   {
 	  printf("\n");
   }
   else
   {
-	  HAL_UART_Transmit(&huart1, (uint8_t *)&echoChar, 1, 0xFFFF);
+	  HAL_UART_Transmit(&huart1, (uint8_t *)&RXChar, 1, 0xFFFF);
   }
-  HAL_UART_Receive_IT(&huart1, (uint8_t *)&echoChar, 1);
+  HAL_UART_Receive_IT(&huart1, (uint8_t *)&RXChar, 1);
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
