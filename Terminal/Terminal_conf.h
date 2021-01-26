@@ -19,7 +19,7 @@
 
 #define TERMINAL_CHANNEL_ID 'T'
 
-#define MAX_ARG_SIZE 100
+#define MAX_ARG_SIZE 5
 #define MAX_ARG_COUNT 5
 #define ENABLE_AUTOFILL_ARGS False
 

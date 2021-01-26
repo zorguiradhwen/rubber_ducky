@@ -30,16 +30,26 @@ typedef struct CommandArgs_s
 
 }CommandArgs;
 
-typedef struct Frame_s
+typedef struct FrameRx_s
 {
-	u8 channel;
-	u16 cmdID;
-	u8 argsCount;
+	u8  channel	 ;
+	u16 size     ;
+	u8  status	 ;
+	u16 cmd_id	 ;
+	u8  args_count;
 	CommandArgs args[MAX_ARG_COUNT];
+	u16 crc		 ;
+}FrameRx;
 
-}Frame;
-
-
+typedef struct FrameRxHandler_s
+{
+	u8  data[MAX_ARG_COUNT * MAX_ARG_SIZE + 7];
+	u16 c_count;
+	u16 size;
+	Bool iscomplete;
+	Bool discard;
+	FrameRx frame;
+}FrameRxHandler;
 
 /*
  *

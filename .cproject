@@ -41,11 +41,7 @@
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.includepaths.2016946769" name="Include paths (-I)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.includepaths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
-<<<<<<< HEAD
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/MY_FLASH}&quot;"/>
-=======
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Terminal}&quot;"/>
->>>>>>> branch 'main' of https://github.com/zorguiradhwen/rubber_ducky.git
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Logger}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/printfOverride}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/common/timestamp}&quot;"/>
@@ -89,10 +85,6 @@
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Hal"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Logger"/>
-<<<<<<< HEAD
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="MY_FLASH"/>
-=======
->>>>>>> branch 'main' of https://github.com/zorguiradhwen/rubber_ducky.git
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Terminal"/>
 						<entry excluding="printfOverride|rtc" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="common"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="main"/>
@@ -178,10 +170,6 @@
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Hal"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Logger"/>
-<<<<<<< HEAD
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="MY_FLASH"/>
-=======
->>>>>>> branch 'main' of https://github.com/zorguiradhwen/rubber_ducky.git
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Terminal"/>
 						<entry excluding="printfOverride|rtc" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="common"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="main"/>
@@ -197,15 +185,6 @@
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
-	<storageModule moduleId="scannerConfiguration">
-		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		<scannerConfigBuildInfo instanceId="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.1712871961;com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.1712871961.;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.44437644;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1187157072">
-			<autodiscovery enabled="false" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.1592992812;com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.1592992812.;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.1978349047;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.479699158">
-			<autodiscovery enabled="false" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
-	</storageModule>
 	<storageModule moduleId="refreshScope" versionNumber="2">
 		<configuration configurationName="Debug">
 			<resource resourceType="PROJECT" workspacePath="/rubber_ducky"/>
@@ -215,4 +194,6 @@
 		</configuration>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+	<storageModule moduleId="scannerConfiguration"/>
+	<storageModule moduleId="org.eclipse.cdt.core.pathentry"/>
 </cproject>

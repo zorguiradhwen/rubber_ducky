@@ -60,7 +60,7 @@ Bool Hal_init()
   Timestamp_init();
 
   /* initialize reception via UART interrupt */
-  HAL_UART_Receive_IT(&huart1, (uint8_t *)&echoChar, 1);
+  HAL_UART_Receive_IT(&huart1, (uint8_t *)&RXChar, 1);
 
 
   return True;
