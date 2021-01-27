@@ -13,6 +13,7 @@ static FrameRxHandler rxhandler;
 
 TerminalError Terminal_getChar(u8 ch)
 {
+	TerminalError result = TERMINAL_OK;
 	rxhandler.data[rxhandler.c_count] = ch;
 	if (rxhandler.c_count == 0u)
 	{
@@ -20,6 +21,7 @@ TerminalError Terminal_getChar(u8 ch)
 		if(rxhandler.frame.channel != TERMINAL_CHANNEL_ID)
 		{
 			rxhandler.discard = True;
+			result = INVALID_FRAME;
 		}
 		else
 		{
@@ -33,47 +35,88 @@ TerminalError Terminal_getChar(u8 ch)
 	else if (rxhandler.c_count == 2u)
 	{
 		// calculate frame size according to size field
-		memcpy(&rxhandler.frame.size, rxhandler.data + 1, 2);
+		memcpy(&rxhandler.frame.size, rxhandler.data + 1u, 2u);
 	}
 	else
 	{
-		;
+		if ((rxhandler.c_count + 1u) == rxhandler.frame.size)
+		{
+			rxhandler.iscomplete = True;
+			result = Terminal_getFrame();
+		}
+		else
+		{
+			;
+		}
 	}
-
 	rxhandler.c_count++;
-	return TERMINAL_OK;
+	return result;
 }
 
-TerminalError Terminal_getFrame();
+TerminalError Terminal_getFrame()
+{
+	u16 bytes_read = 0u;
+		TerminalError result = TERMINAL_OK;
+		if(rxhandler.discard == False && rxhandler.iscomplete == True)
+		{
+			rxhandler.frame.status = rxhandler.data[3];
+			memcpy(&rxhandler.frame.cmd_id, rxhandler.data + 4u, 2u);
+			rxhandler.frame.args_count = rxhandler.data[6u];
+			if(rxhandler.frame.args_count > MAX_ARG_COUNT)
+			{
+				result = EXCESS_PARAMS;
+				rxhandler.discard = True;
+			}
+			else
+			{
+				bytes_read = 7u;
+				for(u8 i = 0; i < rxhandler.frame.args_count; i++)
+				{
+					rxhandler.frame.args[i].size = rxhandler.data[bytes_read];
+					if (rxhandler.frame.args[i].size > MAX_ARG_SIZE)
+					{
+						result = EXCESS_ARGSIZE;
+						rxhandler.discard = True;
+						break;
+					}
+					else if(rxhandler.frame.args[i].size == 0u)
+					{
+						result = NULL_ARG;
+						rxhandler.discard = True;
+						break;
+					}
+					else
+					{
+						bytes_read++;
+						memcpy(rxhandler.frame.args[i].data, \
+								rxhandler.data + bytes_read, rxhandler.frame.args[i].size);
+						bytes_read += rxhandler.frame.args[i].size;
+						if(bytes_read > rxhandler.size - 2u)
+						{
+							result = INVALID_FRAME;
+							rxhandler.discard = True;
+							break;
+						}
+						else
+						{
+							;
+						}
+					}
+				}
+				memcpy(&rxhandler.frame.crc, ((rxhandler.data) + (rxhandler.size - 2u)), 2u);
+				//TODO : check crc integrity
+
+			}
+		}
+		else
+		{
+			;
+		}
+		return result;
+}
 TerminalError Terminal_process()
 {
-	u16 processedBytes = 0;
-	u8 processedArgs = 0;
-	if (frameLen == 0)
-	{
-		return INVALID_FRAME;
-	}
-	else if(frameData[0] != TERMINAL_CHANNEL_ID)
-	{
-		return WRONG_CHANNEL;
-	}
-	else if(frameLen < 4)
-	{
-		return INVALID_FRAME;
-	}
-	else
-	{
-		frame.channel = frameData[0];
-		memcpy(&frame.cmdID, frameData+1, 2);
-		frame.argsCount = frameData[3];
-		processedBytes = 4;
-		while (processedBytes < frameLen && processedArgs < frame.argsCount)
-		{
 
-		}
-
-
-	}
 }
 
 TerminalError Terminal_init()
@@ -86,6 +129,7 @@ TerminalError Terminal_init()
 	rxhandler.size = 0u;
 	rxhandler.iscomplete = False;
 	rxhandler.discard = False;
+	rxhandler.isprocessed = False;
 	rxhandler.frame.channel = 0u;
 	rxhandler.frame.cmd_id = 0u;
 	rxhandler.frame.status = 0u;

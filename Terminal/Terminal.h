@@ -16,7 +16,24 @@ typedef enum TerminalError_e
 	TERMINAL_OK,
 	INVALID_FRAME,
 	WRONG_CHANNEL,
+	EXCESS_PARAMS,
+	EXCESS_ARGSIZE,
+	NULL_ARG,
+	CRC_MISMATCH
 }TerminalError;
+
+typedef enum TerminalStatus_e
+{
+	FRAME_INIT,
+	FRAME_RECEIVING,
+	FRAME_DISCARD,
+	FRAME_COMPLETE,
+	FRAME_PROCESSING,
+	FRAME_PROCESSED,
+	FRAME_EXECUTE,
+	FRAME_RESPONDING,
+	FRAME_RESPONDED
+}TerminalStatus;
 
 /*
  * Frame typedefs and analysis functions
@@ -48,6 +65,7 @@ typedef struct FrameRxHandler_s
 	u16 size;
 	Bool iscomplete;
 	Bool discard;
+	Bool isprocessed;
 	FrameRx frame;
 }FrameRxHandler;
 
@@ -59,7 +77,6 @@ typedef struct FrameRxHandler_s
 TerminalError Terminal_getFrame();
 TerminalError Terminal_getChar(u8 ch);
 TerminalError Terminal_process();
-
 TerminalError Terminal_init();
 
 
