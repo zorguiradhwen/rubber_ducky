@@ -63,9 +63,7 @@ typedef struct FrameRxHandler_s
 	u8  data[MAX_ARG_COUNT * MAX_ARG_SIZE + 7];
 	u16 c_count;
 	u16 size;
-	Bool iscomplete;
-	Bool discard;
-	Bool isprocessed;
+	TerminalStatus state;
 	FrameRx frame;
 }FrameRxHandler;
 
@@ -78,7 +76,7 @@ TerminalError Terminal_getFrame();
 TerminalError Terminal_getChar(u8 ch);
 TerminalError Terminal_process();
 TerminalError Terminal_init();
-
+TerminalError Terminal_run();
 
 
 
