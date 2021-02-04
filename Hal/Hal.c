@@ -17,7 +17,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
   /* Prevent unused argument(s) compilation warning */
   UNUSED(huart);
 
-  Terminal_getChar(RXChar);
+  //Terminal_getChar(RXChar);
   if (RXChar == '\n')
   {
 	  printf("\n");
